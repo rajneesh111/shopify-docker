@@ -6,6 +6,13 @@ env:
 phases:
   pre_build:
     commands:
+      pre_build:
+    commands:
+      - apt-get install wget apt-transport-https gnupg
+      - wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add -
+      - echo deb https://aquasecurity.github.io/trivy-repo/deb bionic main | tee -a /etc/apt/sources.list.d/trivy.list
+      - apt-get update
+      - apt-get install -y trivy
       - echo Logging in to Amazon ECR...
       - aws --version
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 428075270827.dkr.ecr.us-east-1.amazonaws.com
@@ -18,5 +25,6 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
+      - trivy --no-progress --exit-code 1 --severity HIGH,CRITICAL $REPOSITORY_URI:success
       - docker push $REPOSITORY_URI:latest
       - aws ecs update-service --cluster shopify --service shopify-app --force-new-deployment

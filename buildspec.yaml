@@ -25,6 +25,5 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - trivy image 428075270827.dkr.ecr.us-east-1.amazonaws.com/shopify:latest
       - docker push $REPOSITORY_URI:latest
       - aws ecs update-service --cluster shopify --service shopify-app --force-new-deployment

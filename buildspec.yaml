@@ -1,12 +1,10 @@
-version: 0.2   
+version: 0.2
 env:
   variables:
     REPOSITORY_URI: "428075270827.dkr.ecr.us-east-1.amazonaws.com/shopify"
 
 phases:
   pre_build:
-    commands:
-      pre_build:
     commands:
       - apt-get install wget apt-transport-https gnupg
       - wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add -
@@ -16,11 +14,13 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 428075270827.dkr.ecr.us-east-1.amazonaws.com
+
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
+
   post_build:
     commands:
       - echo Build completed on `date`

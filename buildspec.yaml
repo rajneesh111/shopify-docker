@@ -26,4 +26,4 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
-      - aws ecs update-service --cluster shopify --service shopify-app --force-new-deployment
+      - aws ecs update-service --cluster shopify --service shopify-service --force-new-deployment

@@ -24,15 +24,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Get Node v18
+      - name: Get Node
         uses: actions/setup-node@v3
         with:
           node-version: 21
       - name: Install dependencies
         run: npm install
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master # For node projects, change accordingly
+        uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}    
         with:

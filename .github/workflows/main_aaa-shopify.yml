@@ -30,6 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
+        echo: ${{ secrets.AzureAppService_ContainerUsername_6b88648a76514d989b62a0463ae53a04 }}
         tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_6b88648a76514d989b62a0463ae53a04 }}/starkz09/shopify:${{ github.sha }}
         file: ./Dockerfile
 
